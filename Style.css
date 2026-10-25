@@ -1,0 +1,747 @@
+/* =====================================================
+   PORTFOLIO STYLESHEET (Version 3: dark emerald theme)
+   Table of contents:
+    1. CSS variables (colour palette)
+    2. Global / reset styles
+    3. Header / navigation
+    4. Hero / home
+    5. Buttons
+    6. General section styles
+    7. About     8. Skills     9. Projects
+   10. Contact  11. Footer    12. Animation
+   13. Responsive design (media queries)
+   ===================================================== */
+
+/* =====================================================
+   1. CSS VARIABLES - change a colour here and it updates everywhere
+
+   Palette (4 main colours): DARK EMERALD THEME
+     1. Midnight - dark green-black backgrounds (--bg, --surface)
+     2. Emerald  - main accent (buttons, highlights)
+     3. Amber    - second accent (tags, small details)
+     4. Mist     - near-white text (--text, --muted)
+   ===================================================== */
+:root {
+  --bg: #0e1512;             /* 1. page background */
+  --surface: #16211c;        /* midnight shade: cards and alternate sections */
+  --line: #2b3d34;           /* midnight shade: borders */
+  --text: #e8f3ee;           /* 4. main text (15:1 contrast on bg) */
+  --muted: #a9bdb3;          /* mist shade: secondary text (9:1 contrast) */
+  --primary: #34d399;        /* 2. emerald accent */
+  --primary-dark: #10b981;   /* emerald shade: button hover */
+  --on-primary: #06281c;     /* dark text used on emerald buttons (9:1) */
+  --secondary: #fbbf24;      /* 3. amber accent (11:1 on bg) */
+  --secondary-soft: rgba(251, 191, 36, 0.12); /* amber tint: tag background */
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --font-body: "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+}
+
+/* =====================================================
+   2. GLOBAL / RESET STYLES
+   ===================================================== */
+* {
+  box-sizing: border-box; /* padding stays inside the element's width */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;   /* smooth jump when a nav link is clicked */
+  scroll-padding-top: 80px;  /* keeps headings visible below the sticky header */
+  -webkit-text-size-adjust: 100%; /* stops iPhones resizing text on rotate */
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem; /* 16px: comfortable to read on a phone */
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;        /* safety net against sideways scrolling */
+  overflow-wrap: break-word; /* long words/emails wrap instead of overflowing */
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Centres content and limits its width on big screens */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Clear keyboard focus ring for every link */
+a:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   3. HEADER / NAVIGATION
+   ===================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(14, 21, 18, 0.96);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Flexbox: logo on the left, links on the right */
+.navbar {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 6px;
+}
+
+.nav-links a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 50px;
+  color: var(--muted);
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Hover / focus state for nav links */
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Hamburger parts are hidden until the phone media query turns them on */
+.menu-toggle,
+.menu-icon {
+  display: none;
+}
+
+/* =====================================================
+   4. HERO / HOME (CSS Grid: text left, card right)
+   ===================================================== */
+.hero {
+  padding: 90px 0 80px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* Each hero item fades up one after the other */
+.hero-text > * {
+  animation: fadeUp 0.8s ease both;
+}
+.hero-text > *:nth-child(2) { animation-delay: 0.12s; }
+.hero-text > *:nth-child(3) { animation-delay: 0.24s; }
+.hero-text > *:nth-child(4) { animation-delay: 0.36s; }
+
+.eyebrow {
+  display: inline-block;
+  padding: 4px 14px;
+  margin-bottom: 18px;
+  border-radius: 50px;
+  background: var(--secondary-soft);
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.3rem, 7vw, 4rem); /* grows and shrinks with the screen */
+  margin-bottom: 18px;
+}
+
+.hero-lead {
+  max-width: 540px;
+  margin-bottom: 30px;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.hero-lead strong {
+  color: var(--text);
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* Quick-facts card */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  animation: float 5s ease-in-out infinite; /* gentle floating motion */
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  margin-bottom: 22px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.facts div + div {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.facts dt {
+  color: var(--secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.facts dd {
+  font-weight: 600;
+}
+
+/* =====================================================
+   5. BUTTONS
+   ===================================================== */
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border: 2px solid var(--primary);
+  border-radius: 50px;
+  font-weight: 700;
+  transition: transform 0.3s, background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-outline {
+  color: var(--primary);
+}
+
+/* Hover and keyboard focus: lift up and change colour */
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-3px);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* =====================================================
+   6. GENERAL SECTION STYLES
+   ===================================================== */
+.section {
+  padding: 80px 0;
+}
+
+.section-white {
+  background: var(--surface);
+}
+
+.section-title {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+}
+
+/* Small emerald underline under every section title */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 4px;
+  background: var(--primary);
+}
+
+h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+/* =====================================================
+   7. ABOUT SECTION (CSS Grid)
+   ===================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 24px;
+}
+
+/* Biography: simple text with an emerald bar on the left */
+.about-bio {
+  padding-left: 22px;
+  border-left: 4px solid var(--primary);
+  color: var(--muted);
+}
+
+.about-bio h3 {
+  color: var(--text);
+}
+
+.about-card {
+  padding: 24px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.about-card h3 {
+  color: var(--secondary);
+}
+
+.about-card .highlight {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Hover for mouse users, focus-within for keyboard users */
+.about-card:hover,
+.about-card:focus-within {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+  border-color: var(--secondary);
+}
+
+.check-list li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.check-list li::before {
+  content: "\2713"; /* tick mark */
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+/* =====================================================
+   8. SKILLS SECTION (Grid of groups, Flexbox chips)
+   ===================================================== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skill-group {
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--primary);
+  border-radius: var(--radius);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skill-group:hover,
+.skill-group:focus-within {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.chips li {
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.chips li:hover {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+/* =====================================================
+   9. PROJECTS SECTION (CSS Grid)
+   ===================================================== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  position: relative;
+  padding: 30px 28px 28px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+  border-color: var(--primary);
+}
+
+/* Big faded number in the corner of each card */
+.project-number {
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  color: var(--line);
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.project-card h3 {
+  padding-right: 60px; /* keeps long titles away from the number */
+}
+
+.project-card p {
+  color: var(--muted);
+}
+
+/* Technology tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.tags li {
+  padding: 4px 14px;
+  border-radius: 50px;
+  background: var(--secondary-soft);
+  color: var(--secondary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* =====================================================
+   10. CONTACT SECTION
+   ===================================================== */
+.contact-intro {
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow-wrap: anywhere; /* long email wraps on small phones */
+  transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+
+.contact-label {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.contact-value {
+  font-weight: 600;
+}
+
+.contact-card:hover,
+.contact-card:focus-visible {
+  transform: translateY(-5px);
+  background: var(--text);
+  color: var(--bg);
+}
+
+.contact-card:hover .contact-label,
+.contact-card:focus-visible .contact-label {
+  color: #0b6b48; /* dark green, readable on the light hover card */
+}
+
+/* =====================================================
+   11. FOOTER
+   ===================================================== */
+.site-footer {
+  padding: 26px 20px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  text-align: center;
+}
+
+/* =====================================================
+   12. ANIMATIONS
+   ===================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Turn motion off for people who ask their device for less motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================
+   13. RESPONSIVE DESIGN (media queries)
+   ===================================================== */
+
+/* ---------- Tablet: 900px and below ---------- */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr; /* text above, card below */
+    gap: 40px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-bio {
+    grid-column: 1 / -1; /* biography spans the full row */
+  }
+
+  .skills-grid,
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+}
+
+/* ---------- Phones: 700px and below ---------- */
+@media (max-width: 700px) {
+
+  /* --- Hamburger menu (CSS only) --- */
+  /* The checkbox is invisible but still works with a keyboard */
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* 44px button = comfortable thumb target */
+  .menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+
+  .menu-toggle:focus-visible + .menu-icon {
+    outline: 3px solid var(--secondary);
+    outline-offset: 3px;
+  }
+
+  /* Three bars: the span is the middle bar, ::before/::after the top and bottom */
+  .menu-icon span,
+  .menu-icon span::before,
+  .menu-icon span::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text);
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .menu-icon span {
+    position: relative;
+  }
+
+  .menu-icon span::before,
+  .menu-icon span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+
+  .menu-icon span::before { top: -7px; }
+  .menu-icon span::after  { top: 7px; }
+
+  /* When open, the bars become an "X" */
+  .menu-toggle:checked + .menu-icon span {
+    background: transparent;
+  }
+  .menu-toggle:checked + .menu-icon span::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle:checked + .menu-icon span::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Links: one column, collapsed until the checkbox is ticked */
+  .nav-links {
+    flex-direction: column;
+    flex-basis: 100%;
+    gap: 4px;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden; /* keeps hidden links out of the Tab order */
+    transition: max-height 0.4s ease, visibility 0s linear 0.4s;
+  }
+
+  .nav-links a {
+    padding: 14px 16px; /* big, easy-to-tap links */
+    border-radius: 10px;
+  }
+
+  .menu-toggle:checked ~ .nav-links {
+    max-height: 360px;
+    visibility: visible;
+    padding-top: 10px;
+    padding-bottom: 6px;
+    transition: max-height 0.4s ease, visibility 0s;
+  }
+
+  /* --- Layout --- */
+  .hero {
+    padding: 56px 0 50px;
+  }
+
+  .about-grid,
+  .skills-grid,
+  .projects-grid,
+  .contact-grid {
+    grid-template-columns: 1fr; /* everything stacks in one column */
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  /* Full-width buttons are easy to tap */
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ---------- Small phones: 430px and below ---------- */
+@media (max-width: 430px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .navbar {
+    padding: 10px 16px;
+  }
+
+  .profile-card,
+  .skill-group,
+  .project-card,
+  .about-card {
+    padding: 20px;
+  }
+}
+
+/* ---------- Very small phones (about 320px) ---------- */
+@media (max-width: 340px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    padding: 12px 18px;
+  }
+}
